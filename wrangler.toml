@@ -1,6 +1,6 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "propertify"
-compatibility_date = "2024-07-01"
+compatibility_date = "2024-03-29"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 
@@ -16,8 +16,16 @@ pages_build_output_dir = ".vercel/output/static"
 # - https://developers.cloudflare.com/pages/functions/bindings/#environment-variables
 # Note: Use secrets to store sensitive data.
 # - https://developers.cloudflare.com/pages/functions/bindings/#secrets
-# [vars]
-# MY_VARIABLE = "production_value"
+[vars]
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = "pk_test_ZWFnZXItc3RvcmstNC5jbGVyay5hY2NvdW50cy5kZXYk"
+CLERK_SECRET_KEY = "sk_test_lfUS3njn3cZG95g1RNHEFgixA752GQWi0RRF7JNNkx"
+NEXT_PUBLIC_CLERK_SIGN_IN_URL = "/sign-in"
+NEXT_PUBLIC_CLERK_SIGN_UP_URL = "/sign-up"
+CLOUDFLARE_ACCOUNT_ID = "7c2c4324e1874b4a89953dc9327f7c0c"
+CLOUDFLARE_DATABASE_ID = "caf6de7e-a2ea-4e7d-b809-9c7d4f044306"
+CLOUDFLARE_D1_TOKEN = "Sgt_g2nETdKHUHW-9S4yW-yDP2Wza-oyn4fsEBg4"
+WEBHOOK_SECRET = "whsec_cCYZRJm6P1+GrrLuo7pqTXwzzjP9JFe3"
+NEXT_PUBLIC_APP_URL = "http://localhost:8788"
 
 # Bind the Workers AI model catalog. Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network
 # Docs: https://developers.cloudflare.com/pages/functions/bindings/#workers-ai
@@ -26,10 +34,10 @@ pages_build_output_dir = ".vercel/output/static"
 
 # Bind a D1 database. D1 is Cloudflare’s native serverless SQL database.
 # Docs: https://developers.cloudflare.com/pages/functions/bindings/#d1-databases
-# [[d1_databases]]
-# binding = "MY_DB"
-# database_name = "my-database"
-# database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "prod-propertify"
+database_id = "caf6de7e-a2ea-4e7d-b809-9c7d4f044306"
 
 # Bind a Durable Object. Durable objects are a scale-to-zero compute primitive based on the actor model.
 # Durable Objects can live for as long as needed. Use these when you need a long-running "server", such as in realtime apps.
@@ -42,9 +50,10 @@ pages_build_output_dir = ".vercel/output/static"
 # Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
 # Docs: https://developers.cloudflare.com/pages/functions/bindings/#kv-namespaces
 # KV Example:
-# [[kv_namespaces]]
-# binding = "MY_KV_NAMESPACE"
-# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+[[kv_namespaces]]
+binding = "CACHE_TAG_STORE"
+id = "3a41f4a76a874754a17b01b49db4702f"
+preview_id = "3a812b45611e43d8a8715a2bb8c3984b"
 
 # Bind a Queue producer. Use this binding to schedule an arbitrary task that may be processed later by a Queue consumer.
 # Docs: https://developers.cloudflare.com/pages/functions/bindings/#queue-producers

@@ -1,0 +1,1 @@
+Project uses Next.JS 15, use functional react. for data / state use jotai with bunshi with tan-stack-query (atomWithQuery). For the db communication, use drizzle with sqlLite. Auth is handled by Clerk. The UI is built off Shadcn/ui.
