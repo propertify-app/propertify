@@ -33,8 +33,8 @@ const application = [
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
+    title: "Reservations",
+    url: "/reservations",
     icon: Calendar,
   },
   {

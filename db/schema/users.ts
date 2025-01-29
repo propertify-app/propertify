@@ -7,7 +7,7 @@ export const users = sqliteTable('users', {
   clerkConnected: integer('clerk_connected', {mode: "boolean"}).notNull()
 });
 
-export const companyRelations = relations(users, ({ many }) => ({
+export const userRelations = relations(users, ({ many }) => ({
   userCompany: many(userCompanyAccess)
 }))
 

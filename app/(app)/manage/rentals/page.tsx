@@ -1,14 +1,23 @@
-export const runtime = "edge"
+import RentalList from "@/components/client/rentals/rental-list";
+import { getCachedActiveCompany } from "@/lib/services/company/get-active-company";
+import { getQueryClient } from "@/lib/trpc-query/get-query-client";
+import { trpc } from "@/lib/trpc-query/server";
+export const runtime = 'edge';
 
-export default function Rentals() {
+export default async function Rentals() {
+
+  // const queryClient = getQueryClient();
+
+  // const queries = [
+  //   queryClient.prefetchQuery({
+  //     queryKey: ['rentals', 'getRentals', getCachedActiveCompany()],
+  //     queryFn: () => trpc.rentals.getRentals(),
+  //   })
+  // ];
+
+  // await Promise.all(queries);
+
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-      </div>
-      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min"></div>
-    </div>
-  )
+    <RentalList page="rental"/>
+  );
 }

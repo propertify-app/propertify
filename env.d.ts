@@ -11,5 +11,6 @@ interface CloudflareEnv {
 	CLOUDFLARE_D1_TOKEN: "Sgt_g2nETdKHUHW-9S4yW-yDP2Wza-oyn4fsEBg4";
 	WEBHOOK_SECRET: "whsec_cCYZRJm6P1+GrrLuo7pqTXwzzjP9JFe3";
 	NEXT_PUBLIC_APP_URL: "http://localhost:8788";
+	IMAGES: R2Bucket;
 	DB: D1Database;
 }

@@ -1,5 +1,6 @@
 import { getDb } from '@/db';
 import { userCompanyAccess } from '@/db/schema/company';
+import { revalidateTag } from '@/lib/cache';
 import { eq, and } from 'drizzle-orm';
 
 export async function updateSelectedCompany(userId: string, companyId: string) {
@@ -21,6 +22,8 @@ export async function updateSelectedCompany(userId: string, companyId: string) {
         eq(userCompanyAccess.companyId, companyId)
       )
     );
+
+  revalidateTag(`company-active-${userId}`)
 
   return true;
 }

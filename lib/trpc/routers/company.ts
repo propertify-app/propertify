@@ -20,7 +20,6 @@ export const companyRouter = t.router({
         throw new Error('Company not found or access denied');
       }
 
-
       await updateSelectedCompany(ctx.userId, companyId);
 
       return { success: true };

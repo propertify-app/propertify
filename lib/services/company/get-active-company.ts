@@ -1,34 +1,28 @@
-import "server-only"
-import { getDb } from "@/db";
-import { Company, company, userCompanyAccess } from "@/db/schema/company";
-import authOrThrow from "@/lib/helpers/get-auth-user";
-import { memoize } from "@/lib/memoize";
-import { eq } from "drizzle-orm";
+import 'server-only';
+import { getDb } from '@/db';
+import { Company, company, CompanyWithAccess, UserCompanyAccess, userCompanyAccess } from '@/db/schema/company';
+import { memoize } from '@/lib/memoize';
+import { and, eq } from 'drizzle-orm';
 
-export const getActiveCompanyByUser = async (userId: string): Promise<Company[]> => {
-  const db = getDb()
-  const results = await db.select({
-    id: company.id,
-    name: company.name
-  }).from(company)
-    .innerJoin(userCompanyAccess, eq(userCompanyAccess.companyId, company.id))
-    .where(
-      eq(userCompanyAccess.userId, userId)
-    )
+export const getActiveCompanyIdByUser = async (
+  userId: string
+): Promise<UserCompanyAccess> => {
+  const db = getDb();
 
-  return results
-}
+  const company = await db.query.userCompanyAccess.findFirst({
+    where: (userCompanyAccess, { eq, and }) =>
+      and(
+        eq(userCompanyAccess.userId, userId),
+        eq(userCompanyAccess.isSelected, true)
+      ),
+  });
+  if(!company) {
+    throw new Error("Company not selected")
+  }
+  return company;
+};
 
-export const getActiveCachedCompany = async () => {
-  const {userId} = await authOrThrow()
-  return memoize(() => getActiveCompanyByUser(userId), {
-    additionalCacheKey: [userId],
-    revalidateTags: [`company-${userId}`]
-  })()
-}
-
-export const getActiveCompany = async () => {
-  const {userId} = await authOrThrow()
-  return getActiveCompanyByUser(userId)
-}
-
+export const getCachedActiveCompany = memoize(getActiveCompanyIdByUser, {
+  additionalCacheKey: (userId) => [userId],
+  revalidateTags: (userId) => [`company-active-${userId}`],
+});

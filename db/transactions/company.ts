@@ -1,8 +1,9 @@
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { company, userCompanyAccess } from "@/db/schema/company";
 import { eq } from "drizzle-orm";
+import { getDb } from "..";
 
-export function createCompanyRecord(db: DrizzleD1Database, name: string) {
+export function createCompanyRecord(db: ReturnType<typeof getDb>, name: string) {
   return db
     .insert(company)
     .values({
@@ -11,7 +12,7 @@ export function createCompanyRecord(db: DrizzleD1Database, name: string) {
     .returning();
 }
 
-export function clearSelectedCompanies(db: DrizzleD1Database, userId: string) {
+export function clearSelectedCompanies(db: ReturnType<typeof getDb>, userId: string) {
   return db
     .update(userCompanyAccess)
     .set({ isSelected: false })
@@ -19,7 +20,7 @@ export function clearSelectedCompanies(db: DrizzleD1Database, userId: string) {
 }
 
 export function createCompanyAccess(
-  db: DrizzleD1Database, 
+  db: ReturnType<typeof getDb>, 
   userId: string, 
   companyId: string, 
   isSelected: boolean = false

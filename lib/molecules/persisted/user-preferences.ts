@@ -1,7 +1,6 @@
 import { molecule } from 'bunshi'
 import { atom } from 'jotai'
 import { atomWithQuery, atomWithMutation, queryClientAtom, atomWithSuspenseQuery } from 'jotai-tanstack-query'
-import { updatePreferences } from '@/actions/user-preferences'
 import { trpc } from '@/lib/trpc-query/client'
 import type { UserPreferences } from '@/lib/services/user-preferences'
 

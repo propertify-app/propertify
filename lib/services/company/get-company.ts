@@ -26,8 +26,3 @@ export const getCachedCompanies = memoize(getCompaniesByUser, {
   revalidateTags: (userId) => [`company-${userId}`]
 })
 
-export const getCompanies = async () => {
-  const { userId } = await authOrThrow()
-  return getCompaniesByUser(userId)
-}
-

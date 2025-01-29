@@ -4,7 +4,7 @@ import { userPreferencesMolecule } from './persisted/user-preferences'
 import { atomWithImmer } from 'jotai-immer'
 
 export const layoutMolecule = molecule((getMol) => {
-  const { themeAtom, sidebarOpenAtom } = getMol(userPreferencesMolecule)
+  const { sidebarOpenAtom } = getMol(userPreferencesMolecule)
 
   const sidebarStateBaseAtom = atomWithImmer({
     mobileOpen: false,
@@ -37,7 +37,6 @@ export const layoutMolecule = molecule((getMol) => {
   })
 
   return {
-    themeAtom,
     sidebarOpenAtom,
     sidebarStateAtom,
     toggleSidebarAtom
